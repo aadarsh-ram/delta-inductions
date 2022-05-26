@@ -1,9 +1,10 @@
 ## Summary
 
 This is the repo for the "Omega Bank Server Setup" task for Delta SysAd Inductions 2022.
+
 The [genUser.sh](./genUser.sh) and [permit.sh](/permit.sh) files must be first executed.
 
-The file structure of all branches and the respective files is:
+The file structure after execution [genUser.sh](./genUser.sh) will be:
 ```
 ./users
 ├── Branch1

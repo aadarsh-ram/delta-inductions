@@ -10,10 +10,11 @@ else
     echo "Defaulting to files/User_Accounts.txt"
 fi
 
-cat $userfile | while read line; do
+while read line; do
     row=( $line );
     user=${row[0]};
     branch=${row[1]}
+    echo $user
 
     mkdir -p ./users/$branch
     cd ./users
@@ -39,6 +40,6 @@ cat $userfile | while read line; do
     sudo chown -R $user $homedir
 
     cd ../..
-done
+done <<<$(cat $userfile)
 
 echo "All users and managers have been created!"

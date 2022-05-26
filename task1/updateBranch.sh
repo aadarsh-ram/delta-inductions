@@ -7,6 +7,7 @@ do
     cd ${i}
     touch Branch_Current_Balance.txt
     touch Branch_Transaction_History.txt
+    cp ../../files/Daily_Interest_Rates.txt Daily_Interest_Rates.txt
     currbal=0
     for j in $(ls -d */)
     do

@@ -2,7 +2,9 @@
 
 This is the repo for the "Omega Bank Server Setup" task for Delta SysAd Inductions 2022.
 
-The [genUser.sh](./genUser.sh) and [permit.sh](/permit.sh) files must be first executed.
+Run ```./aliasgen.sh``` for setting aliases in your ~/.bashrc profile.
+
+The [genUser.sh](./genUser.sh) and [permit.sh](/permit.sh) files must be first executed for generating users and granting appropriate permissions.
 
 The file structure after execution [genUser.sh](./genUser.sh) will be:
 ```

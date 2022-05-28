@@ -42,4 +42,10 @@ while read line; do
     cd ../..
 done <<<$(cat $userfile)
 
-echo "All users and managers have been created!"
+if ! id -u ceo &>/dev/null;
+then
+    sudo useradd ceo -d /
+    echo -e "ceo\nceo\n" | sudo passwd ceo
+fi  
+
+echo "Users, managers and the CEO accounts have been created!"

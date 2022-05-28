@@ -3,12 +3,6 @@
 sudo apt install acl
 cd users
 
-if ! id -u ceo &>/dev/null;
-then
-    sudo useradd ceo -d /
-    echo -e "ceo\nceo\n" | sudo passwd ceo
-fi  
-
 for i in $(ls -d */)
 do
     branch=${i}

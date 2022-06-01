@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt install bc
-
 userfile=$1
 
 if [ -f "${userfile}" ]
@@ -25,15 +23,15 @@ while read line; do
         then
             userbalfile=./users/$branch/$acc/Current_Balance.txt
             num=( $(cat $userbalfile) )
-            check1=$(echo "(0${amt}) < 0" | bc)
+            check1=$(echo $amt | awk '{print $amt < 0}')
             if [[ 1 -eq $check1 ]]
             then
-                check2=$(echo "(0${num}) < (0${amt})" | bc)
+                check2=$(echo $num $amt | awk '{print $num < $amt}')
                 if [[ 1 -eq $check2 ]]
                 then
                     echo "Insufficient funds in $acc"
                 else
-                    newAmt=`echo $num $amt | awk '{printf "%f", $1 - $2}'`
+                    newAmt=`echo $num $amt | awk '{printf "%f", $1 + $2}'`
                     > $userbalfile
                     echo $newAmt >> $userbalfile
                 fi

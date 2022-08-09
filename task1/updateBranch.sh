@@ -18,6 +18,7 @@ do
         cat ./Transaction_History.txt >> ../Branch_Transaction_History.txt
         cd ..
     done
+    > ./Branch_Current_Balance.txt
     echo $currbal >> ./Branch_Current_Balance.txt
     cd ..
 done

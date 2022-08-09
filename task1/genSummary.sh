@@ -9,8 +9,8 @@ if [ -f "${history}" ]
 then
     echo "Using given Branch Transaction History"
 else
-    history=./Branch_Transaction_History.txt
-    echo "Defaulting to ./Branch_Transaction_History.txt"
+    history=./${PWD##*/}_Transaction_History.txt
+    echo "Defaulting to ./${PWD##*/}_Transaction_History.txt"
 fi
 
 while read line; do
@@ -23,6 +23,7 @@ while read line; do
 done <<<$(sed '1d' $history)
 
 transdir=`ls ../../files/trans/*.txt`
+summaryFile="../../files/summary_${PWD##*/}.txt"
 
 declare -A currBal
 initflag=0
@@ -33,7 +34,7 @@ do
     declare -A months
     months=( ["02"]="Feburary" ["03"]="March" ["04"]="April" ) # Months can be added
     month=${file:30:2}
-    printf "\nMonth: ${months[$month]}\n"
+    printf "\nMonth: ${months[$month]}\n" | tee -a $summaryFile
     # First file
     if [[ initflag -eq 0 ]];
     then
@@ -86,12 +87,12 @@ do
         done
 
         # Print changes
-        printf "Account changes summary (highest to lowest)\n"
+        printf "Account changes summary (highest to lowest)\n" | tee -a $summaryFile
         # printf "For month of $month\n"
-        echo "Account" '   ' "Change"
+        echo "Account" '   ' "Change" | tee -a $summaryFile
         for k in "${!accounts[@]}"
         do
-            echo $k ' : ' ${accounts["$k"]}
+            echo $k ' : ' ${accounts["$k"]} | tee -a $summaryFile
         done | sort -rn -k3
         initflag=1 # Inital file over
     else
@@ -144,11 +145,11 @@ do
         done
 
         # Print changes
-        printf "Account changes summary (highest to lowest)\n"
-        echo "Account" '   ' "Change"
+        printf "Account changes summary (highest to lowest)\n" | tee -a $summaryFile
+        echo "Account" '   ' "Change" | tee -a $summaryFile
         for k in "${!accounts[@]}"
         do
-            echo $k ' : ' ${accounts["$k"]}
+            echo $k ' : ' ${accounts["$k"]} | tee -a $summaryFile
         done | sort -rn -k3
         
         # Update "currBal" to have current account balances
@@ -184,10 +185,10 @@ do
     declare -A months
     months=( ["02"]="Feburary" ["03"]="March" ["04"]="April" ) # Months can be added
     month=${file:25:2}
-    printf "\nMonth: ${months[$month]}\n"
-    printf "Stats on expenditures\n"
-    echo "Mean: $(datamash mean 1 < $file)"
-    echo "Median: $(datamash median 1 < $file)"
-    echo "Mode: $(datamash mode 1 < $file)"
+    printf "\nMonth: ${months[$month]}\n" | tee -a $summaryFile
+    printf "Stats on expenditures\n" | tee -a $summaryFile
+    echo "Mean: $(datamash mean 1 < $file)" | tee -a $summaryFile
+    echo "Median: $(datamash median 1 < $file)" | tee -a $summaryFile
+    echo "Mode: $(datamash mode 1 < $file)" | tee -a $summaryFile
 done
 rm -rf -d ../../files/exp

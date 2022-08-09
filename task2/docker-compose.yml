@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  docker-server:
+    build: .
+    ports: 
+      - 8080:1000
+    volumes:
+      - ./scripts:/code/scripts

@@ -1,0 +1,16 @@
+FROM ubuntu
+
+RUN apt -y install datamash
+RUN apt -y install acl
+RUN apt -y install python3-pip
+RUN pip3 install Flask==1.1.4
+RUN echo 'root:Docker' | chpasswd
+
+WORKDIR /code
+COPY ./scripts ./code/scripts
+
+RUN ./code/genUser.sh
+RUN ./code/aliasgen.sh
+
+CMD bash -c "./scripts/permit.sh; python3 app.py"
+EXPOSE 1000

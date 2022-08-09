@@ -18,7 +18,7 @@ do
         cat ./Transaction_History.txt >> ../${branch::-1}_Transaction_History.txt
         cd ..
     done
-    > ./${branch}_Current_Balance.txt
+    > ./${branch::-1}_Current_Balance.txt
     echo $currbal >> ./${branch::-1}_Current_Balance.txt
     cd ..
 done

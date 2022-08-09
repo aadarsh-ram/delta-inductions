@@ -2,28 +2,27 @@
 
 sudo apt install datamash
 
+# Files given must be present in the root directory of a branch folder
 history=$1
 
 if [ -f "${history}" ]
 then
-    echo "Using given transaction list"
+    echo "Using given Branch Transaction History"
 else
-    history=./files/Transacion_List.txt
-    echo "Defaulting to files/Transacion_List.txt"
+    history=./Branch_Transaction_History.txt
+    echo "Defaulting to ./Branch_Transaction_History.txt"
 fi
 
 while read line; do
     row=( $line )
     date=${row[2]}
     month=${date:5:2}
-    mkdir -p ./files/trans
-    touch ./files/trans/Transacion_List_$month.txt
-    echo $line >> ./files/trans/Transacion_List_$month.txt
+    mkdir -p ../../files/trans
+    touch ../../files/trans/Transacion_List_$month.txt
+    echo $line >> ../../files/trans/Transacion_List_$month.txt
 done <<<$(sed '1d' $history)
 
-# TODO:
-# Expenditures stats need to be calculated per month
-transdir=`ls ./files/trans/*.txt`
+transdir=`ls ../../files/trans/*.txt`
 
 declare -A currBal
 initflag=0
@@ -161,14 +160,14 @@ do
     fi
 done
 
-rm -rf -d ./files/trans
+rm -rf -d ../../files/trans
 
 while read line; do
     row=( $line )
     date=${row[2]}
     month=${date:5:2}
-    mkdir -p ./files/exp
-    expfile=./files/exp/Expenditures_$month.txt
+    mkdir -p ../../files/exp
+    expfile=../../files/exp/Expenditures_$month.txt
     touch $expfile
 
     amt=${row[1]}
@@ -179,7 +178,7 @@ while read line; do
     fi
 done <<<$(sed '1d' $history)
 
-expdir=`ls ./files/exp/*.txt`
+expdir=`ls ../../files/exp/*.txt`
 for file in $expdir
 do
     declare -A months
@@ -191,4 +190,4 @@ do
     echo "Median: $(datamash median 1 < $file)"
     echo "Mode: $(datamash mode 1 < $file)"
 done
-rm -rf -d ./files/exp
+rm -rf -d ../../files/exp

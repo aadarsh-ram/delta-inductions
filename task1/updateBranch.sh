@@ -14,7 +14,7 @@ do
         user=${j}
         cd $user
         num=( $(cat Current_Balance.txt) )
-        currbal=$(($currbal + ${num[0]}))
+        currbal=`echo $currbal ${num[0]} | awk '{printf "%f", $1 + $2}'` 
         cat ./Transaction_History.txt >> ../Branch_Transaction_History.txt
         cd ..
     done

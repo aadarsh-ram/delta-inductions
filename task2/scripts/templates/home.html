@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Omega Server</title>
+</head>
+<body>
+    <h1>Welcome to Omega Bank's Server</h1>
+    <p>Summary files available:</p>
+    <ul>
+        {% for file in files %}
+            <li><a href="{{ url_for('showSummary', file=file) }}">{{ file }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

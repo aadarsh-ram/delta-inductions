@@ -25,6 +25,9 @@ done <<<$(sed '1d' $history)
 transdir=`ls ../../files/trans/*.txt`
 summaryFile="../../files/summary_${PWD##*/}.txt"
 
+# Delete file if exists
+> $summaryFile
+
 declare -A currBal
 initflag=0
 
@@ -33,7 +36,7 @@ do
     declare -A accounts
     declare -A months
     months=( ["02"]="Feburary" ["03"]="March" ["04"]="April" ) # Months can be added
-    month=${file:30:2}
+    month=${file:34:2}
     printf "\nMonth: ${months[$month]}\n" | tee -a $summaryFile
     # First file
     if [[ initflag -eq 0 ]];
@@ -184,7 +187,7 @@ for file in $expdir
 do
     declare -A months
     months=( ["02"]="Feburary" ["03"]="March" ["04"]="April" ) # Months can be added
-    month=${file:25:2}
+    month=${file:29:2}
     printf "\nMonth: ${months[$month]}\n" | tee -a $summaryFile
     printf "Stats on expenditures\n" | tee -a $summaryFile
     echo "Mean: $(datamash mean 1 < $file)" | tee -a $summaryFile
